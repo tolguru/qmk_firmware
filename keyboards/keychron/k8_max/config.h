@@ -16,6 +16,10 @@
 
 #pragma once
 
+#define TAPPING_TERM 150
+#define TAPPING_TERM_PER_KEY
+#define PERMISSIVE_HOLD
+
 #if defined(RGB_MATRIX_ENABLE) || defined(LED_MATRIX_ENABLE) || defined(LK_WIRELESS_ENABLE)
 /* SPI configuration */
 #    define SPI_DRIVER SPID1
@@ -81,4 +85,3 @@
 #define FN_KEY_2 MO(3)
 
 #define MATRIX_IO_DELAY 10
-
