@@ -29,6 +29,10 @@ enum tap_dances {
     TD_TAB_F18,
 };
 
+enum custom_keycodes {
+    ATEN_ON = SAFE_RANGE,
+};
+
 void macro_layer_finished(tap_dance_state_t *state, void *user_data);
 void macro_layer_reset(tap_dance_state_t *state, void *user_data);
 void tab_f18_finished(tap_dance_state_t *state, void *user_data);
@@ -61,7 +65,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
     ),
     [FN3] = LAYOUT_ansi_87 (
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	RGB_TOG,	
+       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	ATEN_ON,	
        	XXXXXXX,	BT_HST1,	BT_HST2,	BT_HST3,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
         RGB_TOG,	RGB_MOD,	RGB_VAI,	RGB_HUI,	RGB_SAI,	RGB_SPI,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
        	XXXXXXX,	RGB_RMOD,	RGB_VAD,	RGB_HUD,	RGB_SAD,	RGB_SPD,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
@@ -72,8 +76,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case TD(TD_MACRO_LAYER):
-            return TAPPING_TERM - 30;
         default:
             return TAPPING_TERM;
     }
@@ -105,4 +107,22 @@ void macro_layer_reset(tap_dance_state_t *state, void *user_data) {
         unregister_code(KC_F18);
         isLayerActive = false;
     }
+}
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case ATEN_ON: {
+            if (record->event.pressed) {
+                register_code(KC_NUM_LOCK);
+                wait_ms(10);
+                tap_code(KC_MINS);
+                wait_ms(10);
+                unregister_code(KC_NUM_LOCK);
+            }
+
+            return false;
+        }
+    }
+
+    return true;
 }
