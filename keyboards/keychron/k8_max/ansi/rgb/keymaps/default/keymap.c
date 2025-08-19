@@ -26,7 +26,6 @@ enum layers {
 
 enum tap_dances {
     TD_MACRO_LAYER,
-    TD_TAB_F18,
 };
 
 enum custom_keycodes {
