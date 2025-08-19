@@ -33,10 +33,9 @@ enum custom_keycodes {
     ATEN_ON = SAFE_RANGE,
 };
 
+void macro_layer_tap(tap_dance_state_t *state, void *user_data);
 void macro_layer_finished(tap_dance_state_t *state, void *user_data);
 void macro_layer_reset(tap_dance_state_t *state, void *user_data);
-void tab_f18_finished(tap_dance_state_t *state, void *user_data);
-void tab_f18_reset(tap_dance_state_t *state, void *user_data);
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -52,9 +51,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
         XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-       	XXXXXXX,	KC_Z,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-       	KC_F18,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,										XXXXXXX,
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	KC_F18,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
+       	XXXXXXX,	KC_S,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
+       	KC_F17,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,										XXXXXXX,
+       	XXXXXXX,	XXXXXXX,	XXXXXXX,	KC_F17,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
     ),
     [FN2] = LAYOUT_ansi_87 (
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	
@@ -65,12 +64,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
     ),
     [FN3] = LAYOUT_ansi_87 (
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	ATEN_ON,	
-       	XXXXXXX,	BT_HST1,	BT_HST2,	BT_HST3,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-        RGB_TOG,	RGB_MOD,	RGB_VAI,	RGB_HUI,	RGB_SAI,	RGB_SPI,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
+       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				QK_BOOTLOADER,	NK_TOGG,	ATEN_ON,	
+       	XXXXXXX,	BT_HST1,	BT_HST2,	BT_HST3,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,		XXXXXXX,	XXXXXXX,
+        RGB_TOG,	RGB_MOD,	RGB_VAI,	RGB_HUI,	RGB_SAI,	RGB_SPI,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,		XXXXXXX,	XXXXXXX,
        	XXXXXXX,	RGB_RMOD,	RGB_VAD,	RGB_HUD,	RGB_SAD,	RGB_SPD,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	BAT_LVL,	NK_TOGG,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,										XXXXXXX,
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
+       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	BAT_LVL,	NK_TOGG,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,											XXXXXXX,
+       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,		XXXXXXX,	XXXXXXX
     )
 };
 
@@ -82,17 +81,24 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
 }
 
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_MACRO_LAYER] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, macro_layer_finished, macro_layer_reset),
+    [TD_MACRO_LAYER] = ACTION_TAP_DANCE_FN_ADVANCED(macro_layer_tap, macro_layer_finished, macro_layer_reset),
 };
 
-bool isLayerActive = false;
+bool isMacroLayerKeyPressed = false;
+
+void macro_layer_tap(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+        register_code(KC_F17);
+    }
+}
 
 void macro_layer_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
         layer_on(FN1);
-        register_code(KC_F18);
-        isLayerActive = true;
+        isMacroLayerKeyPressed = true;
     } else {
+        unregister_code(KC_F17);
+        wait_ms(10);
         tap_code(KC_SCROLL_LOCK);
         wait_ms(10);
         tap_code(KC_SCROLL_LOCK);
@@ -102,10 +108,10 @@ void macro_layer_finished(tap_dance_state_t *state, void *user_data) {
 }
 
 void macro_layer_reset(tap_dance_state_t *state, void *user_data) {
-    if (isLayerActive) {
+    if (isMacroLayerKeyPressed) {
         layer_off(FN1);
-        unregister_code(KC_F18);
-        isLayerActive = false;
+        unregister_code(KC_F17);
+        isMacroLayerKeyPressed = false;
     }
 }
 
