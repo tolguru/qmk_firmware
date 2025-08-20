@@ -19,42 +19,41 @@
 
 enum layers {
     BASE,
-    FN1,
-    FN2,
-    FN3,
+    WINDOWS,
+    MAC,
+    FN,
 };
 
 enum tap_dances {
-    TD_MACRO_LAYER,
+    MACRO_LAYER,
+    OS_FLAG_TOGGLE,
 };
 
 enum custom_keycodes {
     ATEN_ON = SAFE_RANGE,
+	MAC_HIDE_APPLICATION,
 };
 
 void macro_layer_tap(tap_dance_state_t *state, void *user_data);
 void macro_layer_finished(tap_dance_state_t *state, void *user_data);
 void macro_layer_reset(tap_dance_state_t *state, void *user_data);
 
+void os_toggle_tap(tap_dance_state_t *state, void *user_data);
+
+void commonTapWithMod(uint16_t modKeycode, uint16_t tapKeycode, int term);
+void realeseF17(void);
+
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_ansi_87 (
-         KC_ESC,				KC_F1,		KC_F2,		KC_F3,	KC_F4,		KC_F5,		KC_F6,	KC_F7,		KC_F8,		KC_F9,		KC_F10,		KC_F11,		KC_F12,					KC_PSCR,	KC_F14,		KC_PAUSE,
-         KC_GRV,				KC_1,		KC_2,		KC_3,	KC_4,		KC_5,		KC_6,	KC_7,		KC_8,		KC_9,		KC_0,		KC_MINS,	KC_EQL,		KC_BSPC,	KC_INS,		KC_HOME,	KC_PGUP,
-         KC_TAB,				KC_Q,		KC_W,		KC_E,	KC_R,		KC_T,		KC_Y,	KC_U,		KC_I,		KC_O,		KC_P,		KC_LBRC,	KC_RBRC,	KC_BSLS,	KC_DEL,		KC_END,		KC_PGDN,
-         TD(TD_MACRO_LAYER),	KC_A,		KC_S,		KC_D,	KC_F,		KC_G,		KC_H,	KC_J,		KC_K,		KC_L,		KC_SCLN,	KC_QUOT,	KC_ENT,
-         KC_LSFT,				KC_Z,		KC_X,		KC_C,	KC_V,		KC_B,		KC_N,	KC_M,		KC_COMM,	KC_DOT,		KC_SLSH,	KC_RSFT,										KC_UP,
-         KC_LCTL,				KC_LGUI,	KC_LALT,	KC_SPC,	KC_RALT,	MO(FN3),	KC_APP,	MO(FN1),																			KC_LEFT,	KC_DOWN,	KC_RGHT
+         KC_ESC,			KC_F1,		KC_F2,		KC_F3,	KC_F4,		KC_F5,		KC_F6,	KC_F7,		KC_F8,		KC_F9,		KC_F10,		KC_F11,		KC_F12,					KC_PSCR,	KC_F14,		KC_PAUSE,
+         KC_GRV,			KC_1,		KC_2,		KC_3,	KC_4,		KC_5,		KC_6,	KC_7,		KC_8,		KC_9,		KC_0,		KC_MINS,	KC_EQL,		KC_BSPC,	KC_INS,		KC_HOME,	KC_PGUP,
+         KC_TAB,			KC_Q,		KC_W,		KC_E,	KC_R,		KC_T,		KC_Y,	KC_U,		KC_I,		KC_O,		KC_P,		KC_LBRC,	KC_RBRC,	KC_BSLS,	KC_DEL,		KC_END,		KC_PGDN,
+         TD(MACRO_LAYER),	KC_A,		KC_S,		KC_D,	KC_F,		KC_G,		KC_H,	KC_J,		KC_K,		KC_L,		KC_SCLN,	KC_QUOT,	KC_ENT,
+         KC_LSFT,			KC_Z,		KC_X,		KC_C,	KC_V,		KC_B,		KC_N,	KC_M,		KC_COMM,	KC_DOT,		KC_SLSH,	KC_RSFT,										KC_UP,
+         KC_LCTL,			KC_LGUI,	KC_LALT,	KC_SPC,	KC_RALT,	MO(FN),		KC_APP,	MO(WINDOWS),																		KC_LEFT,	KC_DOWN,	KC_RGHT
     ),
-    [FN1] = LAYOUT_ansi_87 (
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-        XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-       	XXXXXXX,	KC_S,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-       	KC_F17,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,										XXXXXXX,
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	KC_F17,		XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
-    ),
-    [FN2] = LAYOUT_ansi_87 (
+    [WINDOWS] = LAYOUT_ansi_87 (
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
         XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
@@ -62,15 +61,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,										XXXXXXX,
        	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
     ),
-    [FN3] = LAYOUT_ansi_87 (
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				QK_BOOTLOADER,	NK_TOGG,	ATEN_ON,	
-       	XXXXXXX,	BT_HST1,	BT_HST2,	BT_HST3,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,		XXXXXXX,	XXXXXXX,
-        RGB_TOG,	RGB_MOD,	RGB_VAI,	RGB_HUI,	RGB_SAI,	RGB_SPI,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,		XXXXXXX,	XXXXXXX,
-       	XXXXXXX,	RGB_RMOD,	RGB_VAD,	RGB_HUD,	RGB_SAD,	RGB_SPD,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	BAT_LVL,	NK_TOGG,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,											XXXXXXX,
-       	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,		XXXXXXX,	XXXXXXX
+    [MAC] = LAYOUT_ansi_87 (
+       	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	
+       	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
+        XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
+       	XXXXXXX,	MAC_HIDE_APPLICATION,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
+       	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,										XXXXXXX,
+       	XXXXXXX,	XXXXXXX,				XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,	XXXXXXX,	XXXXXXX
+    ),
+    [FN] = LAYOUT_ansi_87 (
+       	TD(OS_FLAG_TOGGLE),	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,				QK_BOOTLOADER,	NK_TOGG,	ATEN_ON,	
+       	XXXXXXX,			BT_HST1,	BT_HST2,	BT_HST3,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,		XXXXXXX,	XXXXXXX,
+        RGB_TOG,			RGB_MOD,	RGB_VAI,	RGB_HUI,	RGB_SAI,	RGB_SPI,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,		XXXXXXX,	XXXXXXX,
+       	XXXXXXX,			RGB_RMOD,	RGB_VAD,	RGB_HUD,	RGB_SAD,	RGB_SPD,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,
+       	XXXXXXX,			XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	BAT_LVL,	NK_TOGG,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,											XXXXXXX,
+       	XXXXXXX,			XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,	XXXXXXX,																			XXXXXXX,		XXXXXXX,	XXXXXXX
     )
 };
+
+// Windows, Mac toggle flag
+bool isWindows = true;
 
 uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -79,24 +89,43 @@ uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
+void commonTapWithMod(uint16_t modKeycode, uint16_t tapKeycode, int term) {
+	register_code(modKeycode);
+	wait_ms(term);
+	tap_code(tapKeycode);
+	wait_ms(term);
+	unregister_code(modKeycode);
+}
+
 tap_dance_action_t tap_dance_actions[] = {
-    [TD_MACRO_LAYER] = ACTION_TAP_DANCE_FN_ADVANCED(macro_layer_tap, macro_layer_finished, macro_layer_reset),
+    [MACRO_LAYER] = ACTION_TAP_DANCE_FN_ADVANCED(macro_layer_tap, macro_layer_finished, macro_layer_reset),
+    [OS_FLAG_TOGGLE] = ACTION_TAP_DANCE_FN_ADVANCED(os_toggle_tap, NULL, NULL),
 };
 
 bool isMacroLayerKeyPressed = false;
+bool isF17Pressed = false;
+
+void realeseF17(void) {
+	if (isF17Pressed) {
+		unregister_code(KC_F17);
+		isF17Pressed = false;
+	}
+}
 
 void macro_layer_tap(tap_dance_state_t *state, void *user_data) {
     if (state->count == 1) {
         register_code(KC_F17);
+		isF17Pressed = true;
     }
 }
 
 void macro_layer_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
-        layer_on(FN1);
+        layer_on(isWindows ? WINDOWS : MAC);
         isMacroLayerKeyPressed = true;
     } else {
-        unregister_code(KC_F17);
+		isWindows = !isWindows;
+        realeseF17();
         wait_ms(10);
         tap_code(KC_SCROLL_LOCK);
         wait_ms(10);
@@ -108,25 +137,36 @@ void macro_layer_finished(tap_dance_state_t *state, void *user_data) {
 
 void macro_layer_reset(tap_dance_state_t *state, void *user_data) {
     if (isMacroLayerKeyPressed) {
-        layer_off(FN1);
-        unregister_code(KC_F17);
+        layer_clear();
         isMacroLayerKeyPressed = false;
     }
+
+	realeseF17();
+}
+
+void os_toggle_tap(tap_dance_state_t *state, void *user_data) {
+    if (state->count == 1) {
+		isWindows = true;
+    } else if (state->count == 2) {
+		isWindows = false;
+	}
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case ATEN_ON: {
+        case ATEN_ON:
             if (record->event.pressed) {
-                register_code(KC_NUM_LOCK);
-                wait_ms(10);
-                tap_code(KC_MINS);
-                wait_ms(10);
-                unregister_code(KC_NUM_LOCK);
+				commonTapWithMod(KC_NUM_LOCK, KC_MINS, 10);
             }
 
             return false;
-        }
+		case MAC_HIDE_APPLICATION:
+			if (record->event.pressed) {
+				realeseF17();
+				commonTapWithMod(KC_LEFT_ALT, KC_H, 50);
+            }
+
+			return false;
     }
 
     return true;
