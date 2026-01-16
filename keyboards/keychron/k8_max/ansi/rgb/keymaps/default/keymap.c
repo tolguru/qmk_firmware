@@ -45,7 +45,7 @@ void os_toggle_tap(tap_dance_state_t *state, void *user_data);
 
 void commonTapWithMod(uint16_t modKeycode, uint16_t tapKeycode, int term);
 void realeseF17(void);
-void aten_number_swap(uint16_t portNumber)
+void aten_number_swap(uint16_t portNumber);
 
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
