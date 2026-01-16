@@ -136,10 +136,9 @@ void macro_layer_tap(tap_dance_state_t *state, void *user_data) {
 
 void macro_layer_finished(tap_dance_state_t *state, void *user_data) {
     if (state->pressed) {
-        layer_on(isWindows ? WINDOWS : MAC);
+        layer_on(WINDOWS);
         isMacroLayerKeyPressed = true;
     } else {
-		isWindows = !isWindows;
         realeseF17();
         wait_ms(10);
         tap_code(KC_SCROLL_LOCK);
